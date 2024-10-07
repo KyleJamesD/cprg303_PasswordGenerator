@@ -54,7 +54,7 @@ const [inputTxt, setInputTxt] = useState('');
 //**************************Button functions ************************* */
 
 const passwordReq: utils.PasswordRequirement = {
-    length: 12,              // e.g., password length set to 12
+    length: Number(inputTxt),              // e.g., password length set to 12
     includeUpper: checkboxVal1,       // e.g., include uppercase letters
     includeLower: checkboxVal2,       // e.g., include lowercase letters
     includeSymbol: checkboxVal3,      // e.g., include special characters
@@ -69,8 +69,10 @@ const [generatedPassword, setGeneratedPassword] = useState("");
 function GeneratePassword () {
     console.log("Generate Password pressed");
     if (isNaN(Number(inputTxt)) || inputTxt=='') {
+        setGeneratedPassword("Select Options");
         showErrorSnackbar('Invalid length value');
         return;
+
     }
     else if(!checkboxVal1 && !checkboxVal2 && !checkboxVal3 && !checkboxVal4) {
         showErrorSnackbar('Make a selection');
