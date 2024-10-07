@@ -9,12 +9,18 @@ import {
 
 
 
+ type InputBoxProps = {
+    inputTxt: string;
+    setInputTxt: (text: string) => void;
+};
 
 
+ function InputBox(props : InputBoxProps) : React.JSX.Element {
 
- function InputBox() : React.JSX.Element {
+    let inputTxt = props.inputTxt
+    let setInputTxt = props.setInputTxt;
 
-    const [inputTxt, setInputTxt] = useState('');
+    
 
     function handleInput(newTxt : string) {
         if (newTxt.length <= 2) {

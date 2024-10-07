@@ -10,7 +10,11 @@ import CheckBox from "./components/FormCheckBox";
 import Btn from "./components/Btn";
 import Output from "./components/Output";
 import { btnType } from "./components/Btn";
-
+import { generatePasswordString } from "./utility/passwordGenerator";
+import * as utils from "./utility/Consts.ts"
+import { showErrorSnackbar } from "./utility/utils.ts";
+import { showInfoSnackBar } from "./utility/utils.ts";
+import { showSuccessSnackBar } from "./utility/utils.ts";
 
 
 function Main() : React.JSX.Element {
@@ -43,17 +47,43 @@ function updateCheckBox4(status : boolean) {
 //********************************************************************************* */
 
 //***************************InputBox********************************** */
-const [userInputVal, setUserInputVal] = useState('');
+const [inputTxt, setInputTxt] = useState('');
+
 //********************************************************************************* */
 
 //**************************Button functions ************************* */
 
-function ButtonPress1 () {
+const passwordReq: utils.PasswordRequirement = {
+    length: 12,              // e.g., password length set to 12
+    includeUpper: checkboxVal1,       // e.g., include uppercase letters
+    includeLower: checkboxVal2,       // e.g., include lowercase letters
+    includeSymbol: checkboxVal3,      // e.g., include special characters
+    includeNumber: checkboxVal4,      // e.g., include numbers
+};
+
+const [generatedPassword, setGeneratedPassword] = useState("");
+
+
+
+
+function GeneratePassword () {
     console.log("Generate Password pressed");
+    if (isNaN(Number(inputTxt)) || inputTxt=='') {
+        showErrorSnackbar('Invalid length value');
+        return;
+    }
+    else if(!checkboxVal1 && !checkboxVal2 && !checkboxVal3 && !checkboxVal4) {
+        showErrorSnackbar('Make a selection');
+        return;
+    }
+    else{
+        const newPassword = generatePasswordString(passwordReq);
+        setGeneratedPassword(newPassword);
+    }
+
+    
 }
-function ButtonPress2 () {
-    console.log("Reset Button  pressed");
-}
+
 
 //**************************Will we need this?************************* */
 const [outputState, updateOutputState] = useState({
@@ -62,13 +92,35 @@ const [outputState, updateOutputState] = useState({
 });
 //********************************************************************************* */
 
+//**************************output Functions and State management************************* */
+function handlecopyfunc () {
+    console.log("We need to implement this function to copy the placeholder text to the clipboard");
+}
+
+//********************************************************************************* */
+
+
+//**********************************RESET ALL VALUES******************************** */
+function Reset () {
+    console.log("Reset Button  pressed");
+    setGeneratedPassword("Select Options");
+    updateCheckBox1(false);
+    updateCheckBox2(false);
+    updateCheckBox3(false);
+    updateCheckBox4(false);
+    setInputTxt('');
+}
+
+//********************************************************************************* */
+
+
 
 
     return (
     <View>
         <View style={style.container}>
             <Text style={style.header}>Password Generator</Text>
-            <InputBox></InputBox>
+            <InputBox inputTxt={inputTxt} setInputTxt={setInputTxt}></InputBox>
             
         </View>
         <View>
@@ -77,11 +129,14 @@ const [outputState, updateOutputState] = useState({
             <CheckBox label="Special Character" checkedStatus={checkboxVal3} updateCheckedStatus={updateCheckBox3} />
             <CheckBox label="Numbers" checkedStatus={checkboxVal4} updateCheckedStatus={updateCheckBox4} />
         </View>
+        <View>
+            <Output generatedPassword={generatedPassword} placeholder="Select Options" handleCopy={handlecopyfunc}></Output>
+        </View>
 
 
         <View>
-            <Btn type={btnType.Primary} title="Generate Password" onPress={ButtonPress1}></Btn>
-            <Btn type={btnType.Danger} title="Reset" onPress={ButtonPress2}></Btn>
+            <Btn type={btnType.Primary} title="Generate Password" onPress={GeneratePassword}></Btn>
+            <Btn type={btnType.Danger} title="Reset" onPress={Reset}></Btn>
         </View>
     </View>
     );
