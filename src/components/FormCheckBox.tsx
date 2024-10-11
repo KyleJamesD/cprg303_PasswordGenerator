@@ -10,6 +10,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 type checkboxPropsType = {
     label : string,
+    colorof : string,
     checkedStatus : boolean,
     updateCheckedStatus : (isChecked : boolean) => void,
 };
@@ -21,13 +22,14 @@ function CheckBox(props : checkboxPropsType) : React.JSX.Element {
     const checkedStatus = props.checkedStatus;              // state Variable from Parent component
     const updateCheckedStatus = props.updateCheckedStatus;  // Update state method from Parent component
     const lableTxt = props.label;
+    const colorofcircle = props.colorof;
 
     return (
         <View style={style.checkBoxView}>
             <BouncyCheckbox
             isChecked={checkedStatus}
             size={25}
-            fillColor="red"
+            fillColor={colorofcircle}
             unFillColor="#FFFFFF"
             // text="Custom Checkbox"
             iconStyle={{ borderColor: "red" }}

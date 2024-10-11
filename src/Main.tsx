@@ -136,10 +136,10 @@ function ResetError () {
             
         </View>
         <View>
-            <CheckBox label="Upper Case Letter" checkedStatus={checkboxVal1} updateCheckedStatus={updateCheckBox1} />
-            <CheckBox label="Lower Case Letter" checkedStatus={checkboxVal2} updateCheckedStatus={updateCheckBox2} />
-            <CheckBox label="Special Character" checkedStatus={checkboxVal3} updateCheckedStatus={updateCheckBox3} />
-            <CheckBox label="Numbers" checkedStatus={checkboxVal4} updateCheckedStatus={updateCheckBox4} />
+            <CheckBox colorof="#abdbe3" label="Upper Case Letter" checkedStatus={checkboxVal1} updateCheckedStatus={updateCheckBox1} />
+            <CheckBox colorof="#063970" label="Lower Case Letter" checkedStatus={checkboxVal2} updateCheckedStatus={updateCheckBox2} />
+            <CheckBox colorof="#C62E2E" label="Special Character" checkedStatus={checkboxVal3} updateCheckedStatus={updateCheckBox3} />
+            <CheckBox colorof="#433878" label="Numbers" checkedStatus={checkboxVal4} updateCheckedStatus={updateCheckBox4} />
         </View>
         <View>
             <Output generatedPassword={generatedPassword} placeholder="Select Options" handleCopy={handlecopyfunc}></Output>
