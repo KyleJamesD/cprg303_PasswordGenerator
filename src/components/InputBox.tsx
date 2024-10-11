@@ -39,6 +39,7 @@ return (
     placeholder="Password Length (8-16)"
     value={inputTxt}
     onChangeText={handleInput}
+    maxLength={2}
     />
     </View>
     

@@ -3,6 +3,7 @@ import {
     View,
     Text,
     StyleSheet,
+    Clipboard
 } from "react-native";
 import InputBox from "./components/InputBox";
 import { useState } from "react";
@@ -44,12 +45,10 @@ function updateCheckBox4(status : boolean) {
     console.log(`checked box4 status: ${status}`);
     setCheckboxVal4(status);
 }
-//********************************************************************************* */
 
 //***************************InputBox********************************** */
 const [inputTxt, setInputTxt] = useState('');
 
-//********************************************************************************* */
 
 //**************************Button functions ************************* */
 
@@ -64,8 +63,6 @@ const passwordReq: utils.PasswordRequirement = {
 const [generatedPassword, setGeneratedPassword] = useState("");
 
 
-
-
 function GeneratePassword () {
     console.log("Generate Password pressed");
     if (isNaN(Number(inputTxt)) || inputTxt=='') {
@@ -76,6 +73,12 @@ function GeneratePassword () {
     }
     else if(!checkboxVal1 && !checkboxVal2 && !checkboxVal3 && !checkboxVal4) {
         showErrorSnackbar('Make a selection');
+        setGeneratedPassword("Select Options");
+        return;
+    }
+    else if(Number(inputTxt) > 16 || Number(inputTxt) < 8 ) {
+        showErrorSnackbar('Enter Number between 8-16');
+        setGeneratedPassword("Select Options");8
         return;
     }
     else{
@@ -96,21 +99,28 @@ const [outputState, updateOutputState] = useState({
 
 //**************************output Functions and State management************************* */
 function handlecopyfunc () {
-    console.log("We need to implement this function to copy the placeholder text to the clipboard");
+    Clipboard.setString(generatedPassword);
+    showSuccessSnackBar('Password Copied');
 }
+
 
 //********************************************************************************* */
 
 
 //**********************************RESET ALL VALUES******************************** */
 function Reset () {
-    console.log("Reset Button  pressed");
+    console.log("Reset Button pressed");
     setGeneratedPassword("Select Options");
     updateCheckBox1(false);
     updateCheckBox2(false);
     updateCheckBox3(false);
     updateCheckBox4(false);
     setInputTxt('');
+    showInfoSnackBar('Cleared');
+}
+
+function ResetError () {
+
 }
 
 //********************************************************************************* */
